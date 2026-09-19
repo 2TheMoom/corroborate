@@ -1,70 +1,82 @@
 /**
- * GenLayer Logo Component
- * Per Brand Guidelines 2025
+ * Corroborate Logo Component
+ *
+ * A balance-scale medallion: a solid fulcrum triangle, a rotating beam with
+ * two pans in two different tones (symbolizing two independent sources on
+ * one scale), inside a thin instrument-blue ring.
  *
  * Variants:
- * - "full": Strong Mark + Wordmark (for desktop/larger spaces)
- * - "mark": Strong Mark only (for mobile/compact spaces)
- * - "wordmark": Wordmark only (for specific cases)
+ * - "full": Mark + Wordmark, nameplate-style (for desktop/larger spaces)
+ * - "mark": Mark only (for mobile/compact spaces)
+ * - "wordmark": Wordmark only
  */
 
 import React from 'react';
 
 export type LogoVariant = 'full' | 'mark' | 'wordmark';
 export type LogoSize = 'sm' | 'md' | 'lg';
-export type LogoTheme = 'light' | 'dark';
 
 interface LogoProps {
   variant?: LogoVariant;
   size?: LogoSize;
-  theme?: LogoTheme;
   className?: string;
 }
 
 const sizeMap = {
-  sm: { mark: 'w-5 h-5', text: 'text-base' },
-  md: { mark: 'w-6 h-6', text: 'text-xl' },
-  lg: { mark: 'w-8 h-8', text: 'text-2xl' },
+  sm: { mark: 24, text: 'text-sm', sub: true },
+  md: { mark: 32, text: 'text-base', sub: true },
+  lg: { mark: 40, text: 'text-lg', sub: true },
 };
 
-export function Logo({
-  variant = 'full',
-  size = 'md',
-  theme = 'dark',
-  className = '',
-}: LogoProps) {
-  const colorClass = theme === 'dark' ? 'text-foreground' : 'text-background';
-  const { mark: markSize, text: textSize } = sizeMap[size];
-
-  // GenLayer Strong Mark (Triangle/Hands symbol)
-  const StrongMark = () => (
+function ScaleMark({ size }: { size: number }) {
+  return (
     <svg
-      className={`${markSize} ${colorClass} transition-colors`}
-      viewBox="0 0 97.76 91.93"
+      width={size}
+      height={size}
+      viewBox="0 0 32 32"
       xmlns="http://www.w3.org/2000/svg"
-      aria-label="GenLayer Logo"
+      aria-label="Corroborate"
+      className="shrink-0"
     >
-      <path
-        fill="currentColor"
-        d="M44.26 32.35L27.72 67.12L43.29 74.9L0 91.93L44.26 0L44.26 32.35ZM53.5 32.35L70.04 67.12L54.47 74.9L97.76 91.93L53.5 0L53.5 32.35ZM48.64 43.78L58.33 62.94L48.64 67.69L39.47 62.92L48.64 43.78Z"
-      />
+      <circle cx="16" cy="16" r="15" fill="none" stroke="var(--primary)" strokeWidth="1.6" />
+      <path d="M16 11.5 L20.5 22.5 L11.5 22.5 Z" fill="var(--foreground)" />
+      <line x1="10" y1="23" x2="22" y2="23" stroke="var(--foreground)" strokeWidth="1.8" strokeLinecap="round" />
+      <g transform="rotate(-6 16 11.5)">
+        <line x1="6" y1="11.5" x2="26" y2="11.5" stroke="var(--foreground)" strokeWidth="1.8" strokeLinecap="round" />
+        <line x1="6" y1="11.5" x2="6" y2="15.5" stroke="var(--foreground)" strokeWidth="1.2" />
+        <line x1="26" y1="11.5" x2="26" y2="15.5" stroke="var(--foreground)" strokeWidth="1.2" />
+        <ellipse cx="6" cy="17.3" rx="4.2" ry="2.4" fill="var(--primary)" />
+        <ellipse cx="26" cy="17.3" rx="4.2" ry="2.4" fill="var(--foreground)" />
+      </g>
+      <circle cx="16" cy="11.5" r="1.7" fill="var(--primary)" />
     </svg>
   );
+}
 
-  // Wordmark (using Space Grotesk from layout)
+export function Logo({ variant = 'full', size = 'md', className = '' }: LogoProps) {
+  const { mark: markSize, text: textSize } = sizeMap[size];
+
   const Wordmark = () => (
-    <span
-      className={`${textSize} font-bold ${colorClass} font-[family-name:var(--font-display)] transition-colors`}
-      style={{ letterSpacing: '-0.02em' }}
-    >
-      GenLayer
-    </span>
+    <div className="leading-none">
+      <span
+        className={`${textSize} font-semibold uppercase text-foreground font-[family-name:var(--font-display)]`}
+        style={{ letterSpacing: '0.1em' }}
+      >
+        Corroborate
+      </span>
+      <div
+        className="mt-0.5 font-[family-name:var(--font-mono)] text-[0.58rem] font-medium uppercase text-muted-foreground"
+        style={{ letterSpacing: '0.12em' }}
+      >
+        Cross-Source Price Oracle
+      </div>
+    </div>
   );
 
   if (variant === 'mark') {
     return (
       <div className={`inline-flex items-center ${className}`}>
-        <StrongMark />
+        <ScaleMark size={markSize} />
       </div>
     );
   }
@@ -77,16 +89,15 @@ export function Logo({
     );
   }
 
-  // Full logo (default): Strong Mark + Wordmark
   return (
-    <div className={`inline-flex items-center gap-2 ${className}`}>
-      <StrongMark />
+    <div className={`inline-flex items-center gap-3.5 ${className}`}>
+      <ScaleMark size={markSize} />
+      <span className="w-px self-stretch bg-border" aria-hidden="true" />
       <Wordmark />
     </div>
   );
 }
 
-// Convenience components for common use cases
 export function LogoFull(props: Omit<LogoProps, 'variant'>) {
   return <Logo {...props} variant="full" />;
 }

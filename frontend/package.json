@@ -1,7 +1,7 @@
 {
-  "name": "genlayer-football-betting",
+  "name": "corroborate-frontend",
   "version": "1.0.0",
-  "description": "GenLayer Football Betting - AI-powered prediction betting on GenLayer blockchain.",
+  "description": "Corroborate - cross-source price-agreement oracle on GenLayer, no LLM.",
   "main": "index.js",
   "scripts": {
     "dev": "next dev",
