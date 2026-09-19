@@ -65,7 +65,7 @@ export function Logo({ variant = 'full', size = 'md', className = '' }: LogoProp
         Corroborate
       </span>
       <div
-        className="mt-0.5 font-[family-name:var(--font-mono)] text-[0.58rem] font-medium uppercase text-muted-foreground"
+        className="hidden sm:block mt-0.5 font-[family-name:var(--font-mono)] text-[0.58rem] font-medium uppercase text-muted-foreground whitespace-nowrap"
         style={{ letterSpacing: '0.12em' }}
       >
         Cross-Source Price Oracle
