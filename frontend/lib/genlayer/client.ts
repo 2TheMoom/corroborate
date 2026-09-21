@@ -42,11 +42,14 @@ declare global {
 }
 
 /**
- * Get the GenLayer RPC URL from environment variables
+ * Get the GenLayer RPC URL from environment variables. Defaults to
+ * Bradbury's own RPC - Corroborate is only ever deployed there, so this
+ * must stay consistent with getGenLayerChain()'s Bradbury fallback rather
+ * than pointing at a different network's endpoint by default.
  */
 export function getStudioUrl(): string {
   return (
-    process.env.NEXT_PUBLIC_GENLAYER_RPC_URL || "https://studio.genlayer.com/api"
+    process.env.NEXT_PUBLIC_GENLAYER_RPC_URL || "https://rpc-bradbury.genlayer.com"
   );
 }
 
